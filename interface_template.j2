@@ -1,0 +1,8 @@
+! {{ router }} Configuration:
+
+{% for interface, ip_address in interfaces.items() %}
+interface {{ interface }}
+   no switchport
+   ip address {{ ip_address }}
+   no shutdown
+{% endfor %}
