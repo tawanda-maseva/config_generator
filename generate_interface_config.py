@@ -7,7 +7,7 @@ import json
 import sys
 from jinja2 import Environment, FileSystemLoader
 
-# Function to generate configurations using Jinja2 templates
+# Function to generate configurations using Jinja2 template
 def generate_config(router, interface_configs):
     template_loader = FileSystemLoader(searchpath="./")
     env = Environment(loader=template_loader)
@@ -21,7 +21,7 @@ def generate_config(router, interface_configs):
 
 # Check if a router argument is provided
 if len(sys.argv) != 2:
-    print("Usage: python3 generate_config.py <router>")
+    print("Usage: python generate_config.py <router>")
     sys.exit(1)
 
 router_arg = sys.argv[1]
@@ -37,4 +37,5 @@ except FileNotFoundError:
 
 # Generate configurations for the specified router
 generate_config(router_arg.upper(), router_configs)
+
 

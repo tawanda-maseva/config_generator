@@ -1,1 +1,1 @@
-This solution makes use of jinja2 templates to populate the configs. Updated such that it only uses one template
+Updated jinja2 with IPv6 addressing
