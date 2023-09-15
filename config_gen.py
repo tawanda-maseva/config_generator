@@ -11,7 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 def generate_config(router, configs):
     template_loader = FileSystemLoader(searchpath="./")
     env = Environment(loader=template_loader)
-    template = env.get_template("interface_template.j2")
+    template = env.get_template("config_template.j2")
     rendered_template = template.render(router=router, 
         interfaces=configs.get("production_interfaces", {}),
         bgp_peers=configs.get("BGP_PeerGoup", {}),
