@@ -3,3 +3,4 @@ v9: Updated json files. Interfaces now grouped under production interfaces. Conf
 v10: Added bgp and renamed files
 v11: Created separate folders for .conf, .json and .j2 files. Generated configs now stored in Generated_Configs folder
 v12: refactored code
+v13: added device roles and templates based on device roles.

@@ -1,4 +1,6 @@
 {
+  "device_role":"msw",
+  "router_id":"172.16.0.1",
   "production_interfaces": {
     "Ethernet1": {
       "IPv4": "10.0.0.1/31",
@@ -22,6 +24,5 @@
       "BGPv4": {"ip":"11.0.0.0", "group":"PSWv4"},
       "BGPv6": {"ip":"11::0", "group":"PSWv6"}
     }
-  },
-  "router_id":"172.16.0.1"
+  }
 }

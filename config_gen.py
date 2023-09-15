@@ -19,16 +19,17 @@ def load_jsonfile(hostname):
     try:
         with open(config_filename, 'r') as json_file:
             config_data = json.load(json_file)
-            return config_data
+            device_role = config_data.get("device_role", "null")
+            return device_role, config_data
     except FileNotFoundError:
         print(f"Configuration file for {router_arg} not found.")
         sys.exit(1)
 
-def generate_config(router, configs):
+def generate_config(router, configs, device_role):
     '''Function to generate configurations using Jinja2 template'''
     template_loader = FileSystemLoader(searchpath="./Jinja_Templates")
     env = Environment(loader=template_loader)
-    template = env.get_template("config_template.j2")
+    template = env.get_template(f"{device_role}_template.j2")
     rendered_template = template.render(router=router, 
         interfaces=configs.get("production_interfaces", {}),
         bgp_peers=configs.get("BGP_PeerGoup", {}),
@@ -44,10 +45,10 @@ def main():
     '''Main function to generate configs'''
     validate_usage()
     router_arg = sys.argv[1]
-
+    device_role, config_data = load_jsonfile(router_arg)
+    
     # Generate configurations for the specified router
-    config_data = load_jsonfile(router_arg)
-    generate_config(router_arg.upper(), config_data)
+    generate_config(router=router_arg.upper(), configs=config_data, device_role=device_role)
 
 main()
 
