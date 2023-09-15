@@ -8,13 +8,17 @@ import sys
 from jinja2 import Environment, FileSystemLoader
 
 # Function to generate configurations using Jinja2 template
-def generate_config(router, interface_configs):
+def generate_config(router, configs):
     template_loader = FileSystemLoader(searchpath="./")
     env = Environment(loader=template_loader)
     template = env.get_template("interface_template.j2")
-    rendered_template = template.render(router=router, interfaces=interface_configs)
+    rendered_template = template.render(router=router, 
+        interfaces=configs.get("production_interfaces", {}),
+        bgp_peers=configs.get("BGP_PeerGoup", {}),
+        router_id=configs.get("router_id", 0)
+        )
 
-    with open(f"{router}_config.conf", "a") as config_file:
+    with open(f"{router}_config.conf", "w") as config_file:
         config_file.write(rendered_template)
 
     print(f"Configuration file {router}_config.conf generated successfully.")
@@ -37,7 +41,7 @@ except FileNotFoundError:
     sys.exit(1)
 
 # Generate configurations for the specified router
-generate_config(router_arg.upper(), router_configs)
+generate_config(router_arg.upper(), config_data)
 
 
 

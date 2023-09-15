@@ -1,9 +1,38 @@
 ! {{ router }} Configuration:
 
+!
+hostname {{ router }}
+!
+ipv6 unicast-routing
+!
 {% for interface, addresses in interfaces.items() %}
 interface {{ interface }}
    no switchport
    ip address {{ addresses['IPv4'] }}
    ipv6 address {{ addresses['IPv6'] }}
    no shutdown
+!
 {% endfor %}
+
+router bgp 65101
+   router-id {{ router_id }}
+   maximum-paths 4 ecmp 4
+   neighbor PSWv4 peer group
+   neighbor PSWv4 remote-as 65101
+   neighbor PSWv4 send-community
+   neighbor PSWv6 peer group
+   neighbor PSWv6 remote-as 65101
+   neighbor PSWv6 send-community
+{% for peer_name, peer_ip_and_group in bgp_peers.items() %}
+   neighbor {{ peer_ip_and_group['BGPv4']['ip'] }} peer group {{ peer_ip_and_group['BGPv4']['group'] }}
+   neighbor {{ peer_ip_and_group['BGPv4']['ip'] }} description {{ peer_name }}
+   neighbor {{ peer_ip_and_group['BGPv6']['ip'] }} peer group {{ peer_ip_and_group['BGPv6']['group'] }}
+   neighbor {{ peer_ip_and_group['BGPv6']['ip'] }} description {{ peer_name }}
+{% endfor %}
+   redistribute connected
+   !
+   address-family ipv4
+      neighbor PSWv4 activate
+   !
+   address-family ipv6
+      neighbor PSWv6 activate
