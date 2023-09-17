@@ -5,3 +5,4 @@ v11: Created separate folders for .conf, .json and .j2 files. Generated configs 
 v12: refactored code
 v13: added device roles and templates based on device roles.
 v14: Updated to generate spine1-psw01 and leaf1-msw01 Arista lab configs.
+v15: Created base template for interfaces, Updated generate_config() to take template as argument

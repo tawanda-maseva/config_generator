@@ -1,4 +1,5 @@
 {
+  "hostname":"spine1-psw01",
   "device_role":"psw",
   "router_id":"172.16.0.1",
 
