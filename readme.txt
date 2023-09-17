@@ -4,3 +4,4 @@ v10: Added bgp and renamed files
 v11: Created separate folders for .conf, .json and .j2 files. Generated configs now stored in Generated_Configs folder
 v12: refactored code
 v13: added device roles and templates based on device roles.
+v14: Updated to generate spine1-psw01 and leaf1-msw01 Arista lab configs.

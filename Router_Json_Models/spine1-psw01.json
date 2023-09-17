@@ -1,0 +1,36 @@
+{
+  "device_role":"psw",
+  "router_id":"172.16.0.1",
+
+  "loopback_interfaces":{
+    "Loopback0":{
+      "IPv4":"172.16.0.1/32",
+      "IPv6":"172::16:0:1/128",
+      "description":"Loopback0"
+    }
+  },
+
+  "production_interfaces": {
+    "Ethernet2": {
+      "IPv4": "172.16.200.1/30",
+      "IPv6": "172:16:200::3/127",
+      "description":"leaf1-msw01"
+    },
+    "Ethernet5": {
+      "IPv4": "172.16.200.13/30",
+      "IPv6": "172:16:200::13/127",
+      "description":"leaf4-msw02"
+    }
+  },
+  
+  "BGP_PeerGoup": {
+    "leaf1-msw01": {
+      "BGPv4": {"ip":"172.16.200.2", "group":"MSWv4"},
+      "BGPv6": {"ip":"172:16:200::2", "group":"MSWv6"}
+    },
+    "leaf4-msw02": {
+      "BGPv4": {"ip":"172.16.200.14", "group":"MSWv4"},
+      "BGPv6": {"ip":"172:16:200::12", "group":"MSWv6"}
+    }
+  }
+}

@@ -1,18 +1,29 @@
-! {{ router }} Configuration:
+// {{ router }} Configuration:
 
+no router bgp 65000
 !
 hostname {{ router }}
 !
 ipv6 unicast-routing
 !
-{% for interface, addresses in interfaces.items() %}
+{% for interface, attribute in interfaces.items() -%}
 interface {{ interface }}
+   description {{ attribute['description'] }}
    no switchport
-   ip address {{ addresses['IPv4'] }}
-   ipv6 address {{ addresses['IPv6'] }}
+   ip address {{ attribute['IPv4'] }}
+   ipv6 address {{ attribute['IPv6'] }}
    no shutdown
 !
 {% endfor %}
+
+{%- for loopback_interface, attribute in loopbacks.items() -%}
+interface {{ loopback_interface }}
+   description {{ attribute['description'] }}
+   ip address {{ attribute['IPv4'] }}
+   ipv6 enable
+   ipv6 address {{ attribute['IPv6'] }}
+!
+{% endfor -%}
 
 router bgp 65101
    router-id {{ router_id }}

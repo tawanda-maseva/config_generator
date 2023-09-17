@@ -15,14 +15,14 @@ def validate_usage():
 
 def load_jsonfile(hostname):
     '''Load the corresponding JSON configuration of a given router/hostname'''
-    config_filename = f"Router_Json_Models/{hostname}_config.json"
+    config_filename = f"Router_Json_Models/{hostname}.json"
     try:
         with open(config_filename, 'r') as json_file:
             config_data = json.load(json_file)
             device_role = config_data.get("device_role", "null")
             return device_role, config_data
     except FileNotFoundError:
-        print(f"Configuration file for {router_arg} not found.")
+        print(f"Jason file for {hostname} not found in Router_Json_Models directory.")
         sys.exit(1)
 
 def generate_config(router, configs, device_role):
@@ -32,6 +32,7 @@ def generate_config(router, configs, device_role):
     template = env.get_template(f"{device_role}_template.j2")
     rendered_template = template.render(router=router, 
         interfaces=configs.get("production_interfaces", {}),
+        loopbacks=configs.get("loopback_interfaces", {}),
         bgp_peers=configs.get("BGP_PeerGoup", {}),
         router_id=configs.get("router_id", 0)
         )
@@ -39,16 +40,16 @@ def generate_config(router, configs, device_role):
     with open(f"Generated_Configs/{router}_config.conf", "w") as config_file:
         config_file.write(rendered_template)
 
-    print(f"Configuration file {router}_config.conf generated successfully. Saved in /Generated_Configs folder")
+    print(f"Configuration file {router}_config.conf generated successfully. Saved in Generated_Configs folder")
 
 def main():
     '''Main function to generate configs'''
     validate_usage()
-    router_arg = sys.argv[1]
+    router_arg = sys.argv[1].lower()
     device_role, config_data = load_jsonfile(router_arg)
     
     # Generate configurations for the specified router
-    generate_config(router=router_arg.upper(), configs=config_data, device_role=device_role)
+    generate_config(router=router_arg, configs=config_data, device_role=device_role)
 
 main()
 

@@ -1,0 +1,41 @@
+{
+  "device_role":"msw",
+  "router_id":"172.16.0.6",
+
+  "loopback_interfaces":{
+    "Loopback0":{
+      "IPv4":"172.16.0.6/32",
+      "IPv6":"172::16:0:6/128",
+      "description":"Loopback0"
+    },
+    "Loopback10":{
+      "IPv4":"2.2.2.2/32",
+      "IPv6":"face:c::2/128",
+      "description":"Service-VIP"
+    }
+  },
+
+  "production_interfaces": {
+    "Ethernet2": {
+      "IPv4": "172.16.200.14/30",
+      "IPv6": "172:16:200::12/127",
+      "description": "spine1-psw01"
+    },
+    "Ethernet3": {
+      "IPv4": "172.16.200.30/30",
+      "IPv6": "172:16:200::30/127",
+      "description": "spine2-psw02"
+    }
+  },
+  
+  "BGP_PeerGoup": {
+    "spine1-psw01": {
+      "BGPv4": {"ip":"172.16.200.13", "group":"PSWv4"},
+      "BGPv6": {"ip":"172:16:200::13", "group":"PSWv6"}
+    },
+    "spine2-psw02": {
+      "BGPv4": {"ip":"172.16.200.29", "group":"PSWv4"},
+      "BGPv6": {"ip":"172:16:200::31", "group":"PSWv6"}
+    }
+  }
+}
